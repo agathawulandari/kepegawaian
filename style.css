@@ -1,0 +1,43 @@
+body {
+    font-family: Arial;
+    background: #f4f4f4;
+}
+
+.container {
+    width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th {
+    background: #3498db;
+    color: white;
+}
+
+td, th {
+    padding: 10px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+    padding: 5px 10px;
+    background: #2ecc71;
+    color: white;
+    border-radius: 5px;
+}
+
+a.hapus {
+    background: red;
+}
