@@ -1,36 +1,51 @@
-<?php include 'koneksi.php'; ?>
-<link rel="stylesheet" href="style.css">
-
-<div class="container">
-<h2>Data Pegawai Lapas Kelas IIA Pekanbaru</h2>
-
-<a href="tambah.php">+ Tambah</a><br><br>
-
-<table>
-<tr>
-    <th>No</th>
-    <th>Nama</th>
-    <th>NIP</th>
-    <th>Jabatan</th>
-    <th>Aksi</th>
-</tr>
-
 <?php
-$no = 1;
-$query = mysqli_query($koneksi, "SELECT * FROM pegawai");
-
-while ($data = mysqli_fetch_assoc($query)) {
+include("template/header.php");
+include("koneksi.php");
 ?>
-<tr>
-    <td><?= $no++ ?></td>
-    <td><?= htmlspecialchars($data['nama']) ?></td>
-    <td><?= htmlspecialchars($data['nip']) ?></td>
-    <td><?= htmlspecialchars($data['jabatan']) ?></td>
-    <td>
-        <a href="edit.php?id=<?= $data['id'] ?>">Edit</a>
-        <a href="hapus.php?id=<?= $data['id'] ?>" class="hapus" onclick="return confirm('Hapus data?')">Hapus</a>
-    </td>
-</tr>
-<?php } ?>
-</table>
-</div>
+
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <?php
+        include("template/sidebar.php");
+        ?>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <!-- Main Content -->
+            <div class="main">
+
+                <?php
+                // menentukan halaman
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+
+                    switch ($page) {
+                        case 'dashboard':
+                            include 'dashboard.php';
+                            break;
+                        case 'kepegawaian':
+                            include 'kepegawaian.php';
+                            break;
+                        case 'tambah':  
+                            include 'tambah.php';
+                            break;
+                        default:
+                            echo "<h3>Halaman tidak ditemukan</h3>";
+                            break;
+                    }
+                } else {
+                    include 'dashboard.php'; // default
+                }
+                ?>
+
+
+            </div>
+            <!-- End of Main Content -->
+
+            <?php
+
+            include 'template/footer.php';
+            ?>
