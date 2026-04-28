@@ -29,7 +29,7 @@ include("koneksi.php");
                         case 'kepegawaian':
                             include 'kepegawaian.php';
                             break;
-                        case 'tambah':  
+                        case 'tambah':
                             include 'tambah.php';
                             break;
                         default:

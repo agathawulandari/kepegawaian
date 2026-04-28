@@ -11,5 +11,4 @@ $stmt = mysqli_prepare($koneksi, "INSERT INTO pegawai (nama, nip, jabatan, alama
 mysqli_stmt_bind_param($stmt, "sssss", $nama, $nip, $jabatan, $alamat, $no_hp);
 mysqli_stmt_execute($stmt);
 
-header("Location: index.php");
-?>
+header("Location: index.php?page=kepegawaian");

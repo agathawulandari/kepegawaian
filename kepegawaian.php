@@ -177,8 +177,7 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Pegawai Lapas Kelas IIA Pekanbaru</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Generate Report</a>
+
     </div>
 
     <!-- Content Row -->
@@ -186,43 +185,52 @@
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <div class="d-flex justify-content-end">
-                        <a href="tambah.php" class="btn btn-primary btn-sm">+ Tambah</a>
+                    <div class="d-flex d-md-flex justify-content-between">
+                        <h1 class="h3 mb-0 text-gray-800">Data Pegawai</h1>
+                        <a href="index.php?page=tambah" class="btn btn-primary btn-sm">Tambah</i></a>
                     </div>
                     <br>
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <th>No</th>
-                            <th>Nama</th>
-                            <th>NIP</th>
-                            <th>Jabatan</th>
-                            <th>Aksi</th>
-                        </tr>
-
-                        <?php
-                        $no = 1;
-                        $query = mysqli_query($koneksi, "SELECT * FROM pegawai");
-
-                        while ($data = mysqli_fetch_assoc($query)) {
-                        ?>
+                    <div class="table-responsive-md">
+                        <table class="table table-striped table-bordered w-100">
                             <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= htmlspecialchars($data['nama']) ?></td>
-                                <td><?= htmlspecialchars($data['nip']) ?></td>
-                                <td><?= htmlspecialchars($data['jabatan']) ?></td>
-                                <td class="text-center">
-                                    <a href="edit.php?id=<?= $data['id'] ?>"><i class="fas fa-edit fa-md text-black-50"></i></a>
-                                    <a href="hapus.php?id=<?= $data['id'] ?>" class="hapus" onclick="return confirm('Hapus data?')"><i class="fas fa-trash-alt fa-md text-black-50"></i></a>
-                                </td>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>NIP</th>
+                                <th>Jabatan</th>
+                                <th>Aksi</th>
                             </tr>
-                        <?php } ?>
-                    </table>
+
+                            <?php
+                            include("koneksi.php");
+                            $no = 1;
+                            $query = mysqli_query($koneksi, "SELECT * FROM pegawai");
+
+                            while ($data = mysqli_fetch_assoc($query)) {
+                            ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= htmlspecialchars($data['nama']) ?></td>
+                                    <td><?= htmlspecialchars($data['nip']) ?></td>
+                                    <td><?= htmlspecialchars($data['jabatan']) ?></td>
+                                    <td>
+                                        <div class="d-flex flex-column flex-md-row gap-1">
+                                            <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-success btn-sm mb-1 mb-md-0 mr-md-1">
+                                                <i class="fas fa-pen fa-md"></i>
+                                            </a>
+                                            <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-warning btn-sm mb-1 mb-md-0 mr-md-1">
+                                                <i class="fas fa-edit fa-md"></i>
+                                            </a>
+                                            <a href="hapus.php?id=<?= $data['id'] ?>" class="btn btn-danger btn-sm mb-1 mb-md-0 mr-md-1" onclick="return confirm('Hapus data?')">
+                                                <i class="fas fa-trash-alt fa-md"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 </div>

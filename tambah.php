@@ -177,42 +177,36 @@
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Data Pegawai Lapas Kelas IIA Pekanbaru</h1>
+        <h1 class="h3 mb-0 text-gray-800">Tambah Data Pegawai Lapas Kelas IIA Pekanbaru</h1>
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"> Generate Report</a>
     </div>
 
     <!-- Content Row -->
     <div class="row">
         <div class="col-xl-12 col-md-12 mb-4">
-            <form method="POST" action="tambah_aksi.php">
-                Nama:<br>
-                <input type="text" name="nama" required><br>
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <form method="POST" action="tambah_aksi.php">
+                        <label for="nama" class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-control mb-3" id="nama" name="nama" aria-describedby="emailHelp" required>
 
-                NIP:<br>
-                <input type="text" name="nip" required><br>
+                        <label for="nip" class="form-label">NIP</label>
+                        <input type="text" class="form-control mb-3" id="nip" name="nip" aria-describedby="emailHelp" required>
 
-                Jabatan:<br>
-                <input type="text" name="jabatan"><br>
+                        <label for="jabatan" class="form-label">Jabatan</label>
+                        <input type="text" class="form-control mb-3" id="jabatan" name="jabatan" aria-describedby="emailHelp">
 
-                Alamat:<br>
-                <textarea name="alamat"></textarea><br>
+                        <label for="alamat" class="form-label">Alamat</label>
+                        <textarea class="form-control mb-3" id="alamat" name="alamat" aria-describedby="emailHelp"></textarea>
 
-                No HP:<br>
-                <input type="text" name="no_hp"><br><br>
-
-                <button type="submit">Simpan</button>
-            </form>
+                        <label for="no_hp" class="form-label">No HP</label>
+                        <input type="text" class="form-control mb-3" id="no_hp" name="no_hp" aria-describedby="emailHelp">
+                        <br>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
+                    <br>
+                </div>
+            </div>
         </div>
-
-
-
-
     </div>
-</div>
-<div class="container">
-
-    <h2>Tambah Pegawai</h2>
-
-
-
 </div>
