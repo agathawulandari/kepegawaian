@@ -199,6 +199,9 @@
                                 <th>Jabatan</th>
                                 <th>Aksi</th>
                             </tr>
+                            <tr>
+                                <th></th>
+                            </tr>
 
                             <?php
                             include("koneksi.php");
@@ -217,7 +220,7 @@
                                             <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-success btn-sm mb-1 mb-md-0 mr-md-1">
                                                 <i class="fas fa-pen fa-md"></i>
                                             </a>
-                                            <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-warning btn-sm mb-1 mb-md-0 mr-md-1">
+                                            <a href="index.php?page=edit&id=<?= $data['id'] ?>" class="btn btn-warning btn-sm mb-1 mb-md-0 mr-md-1">
                                                 <i class="fas fa-edit fa-md"></i>
                                             </a>
                                             <a href="hapus.php?id=<?= $data['id'] ?>" class="btn btn-danger btn-sm mb-1 mb-md-0 mr-md-1" onclick="return confirm('Hapus data?')">
