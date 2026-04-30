@@ -35,6 +35,9 @@ include("koneksi.php");
                         case 'edit':
                             include 'edit.php';
                             break;
+                        case 'hapus':
+                            include 'hapus.php';
+                            break;
                         default:
                             echo "<h3>Halaman tidak ditemukan</h3>";
                             break;

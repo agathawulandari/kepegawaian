@@ -39,107 +39,6 @@
             </div>
         </li>
 
-        <!-- Nav Item - Alerts -->
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-bell fa-fw"></i>
-                <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
-            </a>
-            <!-- Dropdown - Alerts -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">Alerts Center</h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-primary">
-                            <i class="fas fa-file-alt text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 12, 2019</div>
-                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-success">
-                            <i class="fas fa-donate text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 7, 2019</div>
-                        $290.29 has been deposited into your account!
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                        <div class="icon-circle bg-warning">
-                            <i class="fas fa-exclamation-triangle text-white"></i>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="small text-gray-500">December 2, 2019</div>
-                        Spending Alert: We've noticed unusually high spending for your account.
-                    </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-            </div>
-        </li>
-
-        <!-- Nav Item - Messages -->
-        <li class="nav-item dropdown no-arrow mx-1">
-            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-envelope fa-fw"></i>
-                <!-- Counter - Messages -->
-                <span class="badge badge-danger badge-counter">7</span>
-            </a>
-            <!-- Dropdown - Messages -->
-            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">Message Center</h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="..." />
-                        <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div class="font-weight-bold">
-                        <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="..." />
-                        <div class="status-indicator"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="..." />
-                        <div class="status-indicator bg-warning"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                    </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="dropdown-list-image mr-3">
-                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="..." />
-                        <div class="status-indicator bg-success"></div>
-                    </div>
-                    <div>
-                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                    </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-            </div>
-        </li>
-
         <div class="topbar-divider d-none d-sm-block"></div>
 
         <!-- Nav Item - User Information -->
@@ -189,51 +88,172 @@
                         <h1 class="h3 mb-0 text-gray-800">Data Pegawai</h1>
                         <a href="index.php?page=tambah" class="btn btn-primary btn-sm">Tambah</i></a>
                     </div>
+                    <!-- Search Form -->
+                    <div class="d-flex justify-content-end mb-2 mt-3 p-2">
+                        <form class="col-md-4 col-sm-3 d-flex flex-row " role="search" method="get">
+                            <input class="form-control me-2" type="search" name="tcari-data" placeholder="Cari nama atau NIP" aria-label="Search" value="<?= isset($_GET['tcari-data']) ? htmlspecialchars($_GET['tcari-data']) : '' ?>">
+                            <input type="hidden" name="page" value="kepegawaian">
+                            <button class="btn btn-outline-success me-2" type="submit" name="cari-data">Cari</button>
+                            <a href="?page=kepegawaian" class="btn btn-outline-danger">Batal</a>
+
+                        </form>
+                    </div>
                     <br>
                     <div class="table-responsive-md">
-                        <table class="table table-striped table-bordered w-100">
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>NIP</th>
-                                <th>Jabatan</th>
-                                <th>Aksi</th>
-                            </tr>
-                            <tr>
-                                <th></th>
-                            </tr>
-
-                            <?php
-                            include("koneksi.php");
-                            $no = 1;
-                            $query = mysqli_query($koneksi, "SELECT * FROM pegawai");
-
-                            while ($data = mysqli_fetch_assoc($query)) {
-                            ?>
+                        <table class="table w-100">
+                            <thead>
                                 <tr>
-                                    <td><?= $no++ ?></td>
-                                    <td><?= htmlspecialchars($data['nama']) ?></td>
-                                    <td><?= htmlspecialchars($data['nip']) ?></td>
-                                    <td><?= htmlspecialchars($data['jabatan']) ?></td>
-                                    <td>
-                                        <div class="d-flex flex-column flex-md-row gap-1">
-                                            <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-success btn-sm mb-1 mb-md-0 mr-md-1">
-                                                <i class="fas fa-pen fa-md"></i>
-                                            </a>
-                                            <a href="index.php?page=edit&id=<?= $data['id'] ?>" class="btn btn-warning btn-sm mb-1 mb-md-0 mr-md-1">
-                                                <i class="fas fa-edit fa-md"></i>
-                                            </a>
-                                            <a href="hapus.php?id=<?= $data['id'] ?>" class="btn btn-danger btn-sm mb-1 mb-md-0 mr-md-1" onclick="return confirm('Hapus data?')">
-                                                <i class="fas fa-trash-alt fa-md"></i>
-                                            </a>
-                                        </div>
-                                    </td>
+                                    <th>No</th>
+                                    <th>NIP</th>
+                                    <th>Nama</th>
+                                    <th>Jabatan</th>
+                                    <th>Golongan</th>
+                                    <th>Aksi</th>
                                 </tr>
-                            <?php } ?>
+                            </thead>
+                            <tbody>
+                                <?php
+                                include("koneksi.php");
+
+                                $cari = isset($_GET['tcari-data']) ? trim($_GET['tcari-data']) : '';
+
+                                if ($cari != '') {
+
+                                    // Huruf kecil
+                                    $cari = strtolower($cari);
+
+                                    // pecah jadi beberapa kata
+                                    $kata_kunci = explode(' ', $cari);
+
+                                    $sql = "
+                                                SELECT p.*, j.nama_jabatan, parent.nama_jabatan AS parent_nama
+                                                FROM pegawai p
+                                                LEFT JOIN jabatan j ON p.jabatan_id = j.id
+                                                LEFT JOIN jabatan parent ON j.parent_id = parent.id
+                                                WHERE 1=1
+                                            ";
+
+                                    $params = [];
+                                    $types = "";
+
+                                    foreach ($kata_kunci as $key) {
+                                        $sql .= " AND (LOWER(p.nama) LIKE ? OR LOWER(p.nip) LIKE ?)";
+                                        $param = "%$key%";
+                                        $params[] = $param;
+                                        $params[] = $param;
+                                        $types .= "ss";
+                                    }
+
+                                    $stmt = mysqli_prepare($koneksi, $sql);
+                                    mysqli_stmt_bind_param($stmt, $types, ...$params);
+                                    mysqli_stmt_execute($stmt);
+                                    $query = mysqli_stmt_get_result($stmt);
+                                } else {
+                                    $query = mysqli_query($koneksi, "
+                                                SELECT p.*, j.nama_jabatan, parent.nama_jabatan AS parent_nama
+                                                FROM pegawai p
+                                                LEFT JOIN jabatan j ON p.jabatan_id = j.id
+                                                LEFT JOIN jabatan parent ON j.parent_id = parent.id
+                                            ");
+                                }
+                                $no = 1;
+                                while ($data = mysqli_fetch_assoc($query)) {
+                                ?>
+                                    <tr>
+                                        <td><?= $no++ ?></td>
+                                        <td><?= htmlspecialchars($data['nama']) ?></td>
+                                        <td><?= htmlspecialchars($data['nip']) ?></td>
+                                        <td>
+                                            <?php
+                                            if ($data['nama_jabatan'] == 'Staff' && $data['parent_nama']) {
+                                                echo htmlspecialchars("Staff " . $data['parent_nama']);
+                                            } else {
+                                                echo htmlspecialchars($data['nama_jabatan']);
+                                            }
+                                            ?>
+
+                                        <td><?= htmlspecialchars($data['pangkat']) ?></td>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex flex-column flex-md-row gap-1">
+                                                <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-success btn-sm mb-1 mb-md-0 mr-md-1">
+                                                    <i class="fas fa-eye fa-md"></i>
+                                                </a>
+                                                <a href="index.php?page=edit&id=<?= $data['id'] ?>" class="btn btn-warning btn-sm mb-1 mb-md-0 mr-md-1">
+                                                    <i class="fas fa-edit fa-md"></i>
+                                                </a>
+                                                <a href="hapus.php?id=<?= $data['id'] ?>" class="btn btn-danger btn-sm mb-1 mb-md-0 mr-md-1" onclick="return confirm('Hapus data?')">
+                                                    <i class="fas fa-trash-alt fa-md"></i>
+                                                </a>
+                                                <!-- <a href="#"
+                                                    class="btn btn-danger btn-sm"
+                                                    data-toggle="modal" 
+                                                    data-target="#hapusModal"
+                                                    data-id="<?= $data['id'] ?>"
+                                                    data-nama="<?= htmlspecialchars($data[' nama']) ?>">
+
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a> -->
+                                            </div>
+                                        </td>
+                                    </tr>
+                            </tbody>
+                        <?php } ?>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Modal Konfirmasi Hapus -->
+        <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Konfirmasi Hapus</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Yakin ingin menghapus data
+                        <strong id="namaPegawai"></strong>?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            Batal
+                        </button>
+                        <a href="#" id="btnHapus" class="btn btn-danger">
+                            Hapus
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function() {
+
+                $('#hapusModal').on('show.bs.modal', function(event) {
+
+                    var button = $(event.relatedTarget).closest('a');
+
+                    var id = button.data('id');
+                    var nama = button.data('nama');
+
+                    console.log("ID:", id);
+                    console.log("Nama:", nama);
+
+                    $('#namaPegawai').text(nama);
+                    $('#btnHapus').attr('href', 'hapus.php?id=' + id);
+                });
+
+            });
+        </script>
+
+
+
+
     </div>
 </div>
