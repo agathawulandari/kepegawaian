@@ -4,80 +4,11 @@
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
     </button>
-
-    <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
-            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-            </a>
-            <!-- Dropdown - Messages -->
-            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" />
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </li>
-
-        <div class="topbar-divider d-none d-sm-block"></div>
-
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
-        </li>
-    </ul>
 </nav>
 <!-- End of Topbar -->
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-    <!-- Page Heading -->
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-
-    </div>
 
     <!-- Content Row -->
     <div class="row">
@@ -86,20 +17,21 @@
                 <div class="card-body">
                     <div class="d-flex d-md-flex justify-content-between">
                         <h1 class="h3 mb-0 text-gray-800">Data Pegawai</h1>
-                        <a href="index.php?page=tambah" class="btn btn-primary btn-sm">Tambah</i></a>
+                        <a href="index.php?page=tambah" class="btn btn-outline-primary">Tambah</i></a>
                     </div>
                     <!-- Search Form -->
                     <div class="d-flex justify-content-end mb-2 mt-3 p-2">
-                        <form class="col-md-4 col-sm-3 d-flex flex-row " role="search" method="get">
-                            <input class="form-control me-2" type="search" name="tcari-data" placeholder="Cari nama atau NIP" aria-label="Search" value="<?= isset($_GET['tcari-data']) ? htmlspecialchars($_GET['tcari-data']) : '' ?>">
-                            <input type="hidden" name="page" value="kepegawaian">
-                            <button class="btn btn-outline-success me-2" type="submit" name="cari-data">Cari</button>
-                            <a href="?page=kepegawaian" class="btn btn-outline-danger">Batal</a>
-
+                        <form class="col-12 col-sm-8 col-md-6 col-lg-4" role="search" method="get">
+                            <div class="d-flex flex-column flex-md-row gap-2">
+                                <input class="form-control me-2" type="search" name="tcari-data" placeholder="Cari nama atau NIP" aria-label="Search" value="<?= isset($_GET['tcari-data']) ? htmlspecialchars($_GET['tcari-data']) : '' ?>">
+                                <input type="hidden" name="page" value="kepegawaian">
+                                <button class="btn btn-outline-success" type="submit" name="cari-data">Cari</button>
+                                <a href="?page=kepegawaian" class="btn btn-outline-danger">Batal</a>
+                            </div>
                         </form>
                     </div>
                     <br>
-                    <div class="table-responsive-md">
+                    <div class="table-responsive">
                         <table class="table w-100">
                             <thead>
                                 <tr>
@@ -176,24 +108,20 @@
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column flex-md-row gap-1">
-                                                <a href="edit.php?id=<?= $data['id'] ?>" class="btn btn-success btn-sm mb-1 mb-md-0 mr-md-1">
+                                                <a href="index.php?page=detail&id=<?= $data['id'] ?>" class="btn btn-success btn-sm mb-1 mb-md-0 mr-md-1">
                                                     <i class="fas fa-eye fa-md"></i>
                                                 </a>
                                                 <a href="index.php?page=edit&id=<?= $data['id'] ?>" class="btn btn-warning btn-sm mb-1 mb-md-0 mr-md-1">
                                                     <i class="fas fa-edit fa-md"></i>
                                                 </a>
-                                                <a href="hapus.php?id=<?= $data['id'] ?>" class="btn btn-danger btn-sm mb-1 mb-md-0 mr-md-1" onclick="return confirm('Hapus data?')">
-                                                    <i class="fas fa-trash-alt fa-md"></i>
-                                                </a>
-                                                <!-- <a href="#"
-                                                    class="btn btn-danger btn-sm"
-                                                    data-toggle="modal" 
-                                                    data-target="#hapusModal"
+                                                <a href="#"
+                                                    class="btn btn-danger btn-sm btn-hapus"
                                                     data-id="<?= $data['id'] ?>"
-                                                    data-nama="<?= htmlspecialchars($data[' nama']) ?>">
-
+                                                    data-nama="<?= $data['nama'] ?>"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#hapusModal">
                                                     <i class="fas fa-trash-alt"></i>
-                                                </a> -->
+                                                </a>
                                             </div>
                                         </td>
                                     </tr>
@@ -209,23 +137,20 @@
         <div class="modal fade" id="hapusModal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
+
                     <div class="modal-header">
                         <h5 class="modal-title">Konfirmasi Hapus</h5>
-                        <button type="button" class="close" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="modal-body">
-                        Yakin ingin menghapus data
-                        <strong id="namaPegawai"></strong>?
+                    <div class="d-flex modal-body">
+                        <p>Yakin ingin menghapus data:&nbsp;</p>
+                        <strong id="nama-data"></strong>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                             Batal
                         </button>
-                        <a href="#" id="btnHapus" class="btn btn-danger">
-                            Hapus
-                        </a>
+                        <a href="" id="btn-konfirmasi-hapus" class="btn btn-danger">Hapus</a>
                     </div>
 
                 </div>
@@ -233,23 +158,32 @@
         </div>
 
         <script>
-            $(document).ready(function() {
+            document.addEventListener("DOMContentLoaded", function() {
+                const tombolHapus = document.querySelectorAll(".btn-hapus");
+                const btnKonfirmasi = document.getElementById("btn-konfirmasi-hapus");
+                const namaData = document.getElementById("nama-data");
 
-                $('#hapusModal').on('show.bs.modal', function(event) {
+                tombolHapus.forEach(function(btn) {
+                    btn.addEventListener("click", function() {
+                        const id = this.getAttribute("data-id");
+                        const nama = this.getAttribute("data-nama");
 
-                    var button = $(event.relatedTarget).closest('a');
+                        // set link hapus
+                        btnKonfirmasi.href = "hapus.php?id=" + id;
 
-                    var id = button.data('id');
-                    var nama = button.data('nama');
-
-                    console.log("ID:", id);
-                    console.log("Nama:", nama);
-
-                    $('#namaPegawai').text(nama);
-                    $('#btnHapus').attr('href', 'hapus.php?id=' + id);
+                        // tampilkan nama di modal
+                        namaData.textContent = nama;
+                    });
                 });
-
             });
+
+            setTimeout(function() {
+                const alert = document.querySelector('.alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    alert.classList.add('hide');
+                }
+            }, 3000);
         </script>
 
 
