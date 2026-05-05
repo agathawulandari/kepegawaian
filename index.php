@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("template/header.php");
 include("koneksi.php");
 ?>
@@ -37,6 +38,9 @@ include("koneksi.php");
                             break;
                         case 'hapus':
                             include 'hapus.php';
+                            break;
+                        case 'detail':
+                            include 'detail.php';
                             break;
                         default:
                             echo "<h3>Halaman tidak ditemukan</h3>";

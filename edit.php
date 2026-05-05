@@ -184,7 +184,7 @@
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <form method="POST" action="update.php">
+                    <form method="POST" action="update.php" enctype="multipart/form-data">
 
                         <?php
                         include 'koneksi.php';
@@ -197,6 +197,8 @@
                         $data = mysqli_fetch_assoc($result);
                         ?>
                         <input type="hidden" name="id" value="<?= $data['id'] ?>">
+                        <input type="hidden" name="foto_lama" value="<?= $data['foto'] ?>">
+                        <input type="hidden" name="file_sk_lama" value="<?= $data['file_sk'] ?>">
 
                         <div class="mb-3">
                             <label for="nip" class="form-label">NIP</label>
@@ -206,6 +208,18 @@
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Lengkap</label>
                             <input type="text" class="form-control mb-3" id="nama" name="nama" value="<?= $data['nama'] ?>" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Foto</label><br>
+
+                            <img src="<?= !empty($data['foto']) && file_exists('uploads/' . $data['foto'])
+                                            ? 'uploads/' . $data['foto']
+                                            : 'img/profile.png'; ?>"
+                                width="80" class="img-thumbnail mb-2">
+
+                            <input type="file" name="foto" class="form-control" accept="image/*">
+                            <small class="text-muted">Kosongkan jika tidak ingin mengganti foto</small>
                         </div>
 
                         <div class="mb-3">
@@ -345,6 +359,28 @@
                             <label for="no_sk" class="form-label">Nomor SK Terakhir</label>
                             <input type="text" class="form-control" id="no_sk" name="no_sk" value="<?= $data['no_sk_terakhir'] ?>">
                         </div>
+
+                        <!-- tampilkan file lama -->
+                        <div class="mb-3">
+                            <label>File SK Saat Ini:</label><br>
+
+                            <?php if (!empty($data['file_sk']) && file_exists("files/" . $data['file_sk'])): ?>
+                                <a href="files/<?= $data['file_sk'] ?>" class="btn btn-primary" target="_blank">
+                                    Lihat File
+                                </a>
+                            <?php else: ?>
+                                <span class="text-muted">Tidak ada file</span>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- upload baru -->
+                        <div class="mb-3">
+                            <label>Upload File SK (PDF/JPG)</label>
+                            <input type="file" name="file_sk" class="form-control"
+                                accept=".pdf,.jpg,.jpeg,.png">
+                            <small class="text-muted">Kosongkan jika tidak ingin mengganti</small>
+                        </div>
+
 
                         <div class="mb-3">
                             <label for="tmt_sk" class="form-label">TMT SK Jabatan Terakhir</label>
