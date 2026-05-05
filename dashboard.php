@@ -1,4 +1,16 @@
 <!-- Topbar -->
+<?php
+$query = "SELECT COUNT(*) as total FROM pegawai";
+$result = mysqli_query($koneksi, $query);
+
+if (!$result) {
+    die("Query error: " . mysqli_error($koneksi));
+}
+
+$data = mysqli_fetch_assoc($result);
+$jumlahPegawai = $data['total'];
+?>
+
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -181,6 +193,13 @@
         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
     </div>
 
+    <div class="text-center">
+        <img src="Logo imipas.png" alt="" class="img-fluid" width="200">
+        <h1 class="judul-custom">
+        KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN REPUBLIK INDONESIA
+    </h1>
+    </div>
+   
     <!-- Content Row -->
     <div class="row">
         <!-- Earnings (Monthly) Card Example -->
@@ -189,8 +208,9 @@
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jumlah Pegawai</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                <?php echo $jumlahPegawai; ?></div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
