@@ -142,7 +142,7 @@
                         <h5 class="modal-title">Konfirmasi Hapus</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
-                    <div class="d-flex modal-body">
+                    <div class="modal-body">
                         <p>Yakin ingin menghapus data:&nbsp;</p>
                         <strong id="nama-data"></strong>
                     </div>

@@ -106,7 +106,7 @@
                         }
                         ?>
                         <div class="justify-content-center d-flex mb-4">
-                            <img src="<?= htmlspecialchars($foto_url) ?>" width="150" class="img-thumbnail" alt="Foto Pegawai">
+                            <img src="<?= htmlspecialchars($foto_url) ?>" width="180" class="img-thumbnail" alt="Foto Pegawai">
                         </div>
                         <hr style="border-top: 5px solid #000000;">
 
@@ -115,28 +115,28 @@
                         </button>
 
                         <div class="mb-2">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">NIP</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['nip'] ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">NIP</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= $data['nip'] ?></span>
                         </div>
 
                         <div class="mb-2">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Nama Lengkap</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['nama'] ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Nama Lengkap</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= $data['nama'] ?></span>
                         </div>
 
                         <div class="mb-2">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Jenis Kelamin</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['jk'] ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Jenis Kelamin</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= $data['jk'] ?></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Pendidikan Terakhir</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['pendidikan'] ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Pendidikan Terakhir</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= $data['pendidikan'] ?></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Pangkat/Golongan</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['pangkat'] ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Pangkat/Golongan</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= $data['pangkat'] ?></span>
                         </div>
 
                         <div class="mb-3">
@@ -162,17 +162,17 @@
                                 $nama_jabatan = $jabatan['nama_jabatan'];
                             }
                             ?>
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Jabatan</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= htmlspecialchars($nama_jabatan) ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Jabatan</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= htmlspecialchars($nama_jabatan) ?></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Nomor SK Terakhir</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['no_sk_terakhir'] ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Nomor SK Terakhir</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= $data['no_sk_terakhir'] ?></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Dokumen SK Terakhir</label>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Dokumen SK Terakhir</label>
                             <?php
                             $file = $data['file_sk'];
 
@@ -202,13 +202,13 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">TMT SK Jabatan Terakhir</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['tmt_sk'] ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">TMT SK Jabatan Terakhir</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= $data['tmt_sk'] ?></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Kelas Jabatan</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['kelas_jabatan'] ?></span>
+                            <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Kelas Jabatan</label>
+                            <span class="col-md-8" style="font-size: 18px;"><?= $data['kelas_jabatan'] ?></span>
                         </div>
                         <br>
                         <button type="button" class="btn btn-secondary" onclick="window.location.href='index.php?page=kepegawaian'  ">Kembali</button>
