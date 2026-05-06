@@ -93,8 +93,8 @@
                                 ?>
                                     <tr>
                                         <td><?= $no++ ?></td>
-                                        <td><?= htmlspecialchars($data['nama']) ?></td>
                                         <td><?= htmlspecialchars($data['nip']) ?></td>
+                                        <td><?= htmlspecialchars($data['nama']) ?></td>
                                         <td>
                                             <?php
                                             if ($data['nama_jabatan'] == 'Staff' && $data['parent_nama']) {
