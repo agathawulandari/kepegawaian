@@ -53,6 +53,7 @@ $jumlahPegawai = $data['total'];
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
+<<<<<<< HEAD
 
     <div class="row">
         <div class="col-xl-12 col-md-12 mb-4">
@@ -69,6 +70,16 @@ $jumlahPegawai = $data['total'];
         </div>
     </div>
 
+=======
+    <!-- Page Heading -->
+    <div class="text-center">
+        <img src="Logo imipas.png" alt="" class="img-fluid" width="200">
+        <h1 class="judul-custom">
+        KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN REPUBLIK INDONESIA
+    </h1>
+    </div>
+   
+>>>>>>> d021c12 (dashboard)
     <!-- Content Row -->
     <div class="row">
         <!-- Earnings (Monthly) Card Example -->
