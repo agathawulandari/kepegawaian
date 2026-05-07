@@ -1,14 +1,21 @@
+<?php
+$page = $_GET['page'] ?? '';
+?>
+
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-text mx-3">Data Pegawai </div>
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php?page=dashboard">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">DATA PEGAWAI<sup>2</sup></div>
     </a>
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0" />
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item <?= ($page == 'dashboard') ? 'active' : '' ?>">
         <a class="nav-link" href="index.php?page=dashboard">
             <i class=" fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
@@ -21,17 +28,16 @@
     <div class="sidebar-heading">DATA</div>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <li class="nav-item <?= ($page == 'kepegawaian') ? 'active' : '' ?>">
         <a class="nav-link" href="index.php?page=kepegawaian">
-            <i class="fas fa-fw fa-users"></i>
+            <i class="fas fa-fw fa-table"></i>
             <span>Data Kepegawaian</span></a>
     </li>
 
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link" href="index.php?page=keluarga">
-            <i class="fas fa-fw fa-address-card"></i>
-            <span>Data Keluarga</span></a>
+    <!-- Nav Item - Charts -->
+    <li class="nav-item <?= ($page == 'riwayat-pengajuan') ? 'active' : '' ?>">
+        <a class="nav-link" href="index.php?page=riwayat-pengajuan">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Riwayat Pengajuan</span></a>
     </li>
-
 </ul>

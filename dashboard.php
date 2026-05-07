@@ -12,49 +12,102 @@ $data = mysqli_fetch_assoc($result);
 $jumlahPegawai = $data['total'];
 ?>
 
+<!-- Topbar -->
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
     <!-- Sidebar Toggle (Topbar) -->
     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
         <i class="fa fa-bars"></i>
     </button>
-
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
-        </li>
-    </ul>
 </nav>
 <!-- End of Topbar -->
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
-
+    <!-- Content Row -->
     <div class="row">
+        <div class="col-xl-12 col-md-12 mb-4">
+            <?php
+            include 'notifikasi.php';
+            foreach ($notif as $d) { ?>
+                <div class="alert alert-danger d-flex justify-content-between align-items-center">
+                    <div>
+                        <!-- 🔔 <strong><?= $d['nama'] ?></strong><br>
+                        Harus mengajukan kenaikan pangkat<br>
+                        <input type="hidden" name="jatuh_tempo" value="<?= $d['jatuh_tempo'] ?>">
+                        Jatuh tempo: <?= date('d-m-Y', strtotime($d['jatuh_tempo'])) ?> -->
+                        🔔 <strong><?= $d['nama'] ?></strong><br>
+
+                        <?php if ($d['status'] == 'warning') { ?>
+                            Segera ajukan kenaikan pangkat!
+                        <?php } else { ?>
+                            Monitoring
+                        <?php } ?>
+
+                        <br>
+                        Jatuh tempo: <?= date('d-m-Y', strtotime($d['jatuh_tempo'])) ?>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="btn btn-success btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalPengajuan"
+                        data-id="<?= $d['id'] ?>"
+                        data-nama="<?= $d['nama'] ?>">
+                        ✔ Sudah Diajukan
+                    </button>
+
+                </div>
+            <?php } ?>
+
+            <div class="modal fade" id="modalPengajuan" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <form method="POST" action="proses_pengajuan.php">
+                            <input type="hidden" name="id" value="<?= $d['id'] ?>">
+                            <input type="hidden" name="jatuh_tempo" value="<?= $d['jatuh_tempo'] ?>">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Konfirmasi Pengajuan</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>Yakin sudah mengajukan kenaikan pangkat untuk:</p>
+                                <strong id="namaPegawai"></strong>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="hidden" name="id" id="idPegawai">
+
+                                <button type="submit" class="btn btn-success">
+                                    ✔ Ya, Sudah
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Batal
+                                </button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                const modal = document.getElementById('modalPengajuan');
+
+                modal.addEventListener('show.bs.modal', function(event) {
+                    const button = event.relatedTarget;
+
+                    const id = button.getAttribute('data-id');
+                    const nama = button.getAttribute('data-nama');
+
+                    document.getElementById('idPegawai').value = id;
+                    document.getElementById('namaPegawai').textContent = nama;
+                });
+            </script>
+        </div>
+
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card shadow h-100 py-2 mb-4">
                 <div class="card-body">

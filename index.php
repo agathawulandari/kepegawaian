@@ -42,6 +42,9 @@ include("koneksi.php");
                         case 'detail':
                             include 'detail.php';
                             break;
+                        case 'riwayat-pengajuan':
+                            include 'riwayat.php';
+                            break;
                         default:
                             echo "<h3>Halaman tidak ditemukan</h3>";
                             break;
