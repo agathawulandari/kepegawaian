@@ -5,10 +5,7 @@ $page = $_GET['page'] ?? '';
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php?page=dashboard">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-        </div>
-        <div class="sidebar-brand-text mx-3">DATA PEGAWAI<sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">DATA PEGAWAI</div>
     </a>
 
     <!-- Divider -->
