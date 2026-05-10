@@ -94,8 +94,7 @@ $html = '
     KANTOR WILAYAH RIAU<br>
     <b>LEMBAGA PEMASYARAKATAN KELAS IIA PEKANBARU</b><br>
     Jalan Pemasyarakatan Nomor 19, Pekanbaru 28222<br>
-    Telp/Fax: 0761-22262<br>
-    Email: lp2apekanbaru@gmail.com
+    Telp/Fax: 0761-22262<br> Email: lp2apekanbaru@gmail.com
 </div>
 
 <div class="garis"></div>
@@ -113,7 +112,7 @@ $html = '
 <th>Jabatan</th>
 <th>Kelas</th>
 <th>No SK</th>
-<th>TMT SK</th>
+<th>TMT Gol</th>
 </tr>
 ';
 

@@ -15,7 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "
         FROM pegawai p
         LEFT JOIN jabatan j ON p.jabatan_id = j.id
-        LEFT JOIN jabatan parent ON j.parent_id = parent.id
         WHERE 1=1
     ";
 
@@ -46,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $total_halaman = ceil($total_data / $limit);
 
     // DATA
-    $stmt = mysqli_prepare($koneksi, "SELECT p.*, j.nama_jabatan, parent.nama_jabatan AS parent_nama " . $sql . " LIMIT ?, ?");
+    $stmt = mysqli_prepare($koneksi, "SELECT p.*, j.nama_jabatan " . $sql . " LIMIT ?, ?");
 
     if (!empty($params)) {
         $types2 = $types . "ii";
@@ -110,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                     <td><?= htmlspecialchars($data['pangkat']) ?></td>
 
-                    <td>
+                    <td class="d-flex gap-1">
                         <a href="index.php?page=detail&id=<?= $data['id'] ?>" class="btn btn-success btn-sm">
                             <i class="fas fa-eye"></i>
                         </a>
@@ -162,44 +161,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 ?>
 
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-    <?php
-    $data = mysqli_fetch_assoc(mysqli_query($koneksi, "SELECT * FROM pegawai WHERE id = '$_SESSION[id]'"));
-    $username = $_SESSION['username'];
-    ?>
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-        <div class="topbar-divider d-none d-sm-block"></div>
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle"
-                href="#"
-                id="userDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                    <?= ucwords(strtolower($username)) ?>
-                </span>
-                <img class="img-profile rounded-circle"
-                    src="Logo imipas.png" />
-            </a>
-            <!-- Dropdown -->
-            <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
-                aria-labelledby="userDropdown">
-                <a class="dropdown-item"
-                    href="#"
-                    data-bs-toggle="modal"
-                    data-bs-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
-        </li>
-    </ul>
-</nav>
-<!-- End of Topbar -->
+<?php
+include 'template/topbar.php';
+
+?>
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
@@ -296,8 +261,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // update link export
     function updateExportLink() {
-        let urlExcel = "export_excel.php?cari=" + encodeURIComponent(keyword);
-        let urlPDF = "export_pdf.php?cari=" + encodeURIComponent(keyword);
+        let urlExcel = "pegawai_excel.php?cari=" + encodeURIComponent(keyword);
+        let urlPDF = "pegawai_pdf.php?cari=" + encodeURIComponent(keyword);
 
         document.getElementById("exportExcel").href = urlExcel;
         document.getElementById("exportPDF").href = urlPDF;

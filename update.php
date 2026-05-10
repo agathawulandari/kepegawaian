@@ -1,140 +1,85 @@
 <?php
-include 'koneksi.php';
 session_start();
+include 'koneksi.php';
 
+date_default_timezone_set('Asia/Jakarta');
 
-$id = $_POST['id'];
-$foto_lama = $_POST['foto_lama'];
-$nama = $_POST['nama'];
-$nip = $_POST['nip'];
-$jk = $_POST['jk'];
-$pendidikan = $_POST['pendidikan'];
-$pangkat = $_POST['pangkat'];
-$jabatan_id = $_POST['jabatan_id'];
-$no_sk = $_POST['no_sk'];
-$tmt_sk = $_POST['tmt_sk'];
-$kelas_jabatan = $_POST['kelas_jabatan'];
-// ================= UPLOAD FOTO =================
-$nama_file = $foto_lama;
-
-if (isset($_FILES['foto']) && $_FILES['foto']['name'] != "") {
-
-    $foto = $_FILES['foto']['name'];
-    $tmp  = $_FILES['foto']['tmp_name'];
-    $size = $_FILES['foto']['size'];
-
-    $ext = strtolower(pathinfo($foto, PATHINFO_EXTENSION));
-    $allowed = ['jpg', 'jpeg', 'png'];
-
-    // validasi format
-    if (!in_array($ext, $allowed)) {
-        $_SESSION['error_message'] = "Format foto harus JPG/PNG!";
-        header("Location: index.php?page=edit&id=" . $id);
-        exit;
+function formatTanggal($tanggal)
+{
+    if (empty($tanggal)) {
+        return null;
     }
 
-    // validasi ukuran
-    if ($size > 2 * 1024 * 1024) {
-        $_SESSION['error_message'] = "Ukuran foto maksimal 2MB!";
-        header("Location: index.php?page=edit&id=" . $id);
-        exit;
-    }
+    $pecah = explode('-', $tanggal);
 
-    // nama baru
-    $nama_file = time() . "_" . $foto;
-
-    // upload
-    if (move_uploaded_file($tmp, "uploads/" . $nama_file)) {
-
-        // hapus foto lama (jika ada)
-        if (!empty($foto_lama) && file_exists("uploads/" . $foto_lama)) {
-            unlink("uploads/" . $foto_lama);
-        }
-    } else {
-        $_SESSION['error_message'] = "Gagal upload foto!";
-        header("Location: index.php?page=edit&id=" . $id);
-        exit;
-    }
+    // dd-mm-yyyy → yyyy-mm-dd
+    return $pecah[2] . '-' . $pecah[1] . '-' . $pecah[0];
 }
 
-// ================= FILE SK =================
-$file_sk_lama = $_POST['file_sk_lama'] ?? "";
-$nama_file_sk = $file_sk_lama;
+$id             = $_POST['id'];
+$nip            = mysqli_real_escape_string($koneksi, $_POST['nip']);
+$nama           = mysqli_real_escape_string($koneksi, $_POST['nama']);
+$jk             = mysqli_real_escape_string($koneksi, $_POST['jk']);
+$pangkat        = mysqli_real_escape_string($koneksi, $_POST['pangkat']);
+$tmt_sk         = formatTanggal($_POST['tmt_sk']);
+$jabatan_id     = mysqli_real_escape_string($koneksi, $_POST['jabatan_id']);
+$tgl_pelantikan = formatTanggal($_POST['tgl_pelantikan']);
+$tmt_jabatan    = formatTanggal($_POST['tmt_jabatan']);
+$jns_jabatan    = mysqli_real_escape_string($koneksi, $_POST['jns_jabatan']);
+$agama          = mysqli_real_escape_string($koneksi, $_POST['agama']);
+$no_hp          = mysqli_real_escape_string($koneksi, $_POST['no_hp']);
+$alamat         = mysqli_real_escape_string($koneksi, $_POST['alamat']);
+$pelatihan      = mysqli_real_escape_string($koneksi, $_POST['pelatihan']);
+$thn_pelatihan  = mysqli_real_escape_string($koneksi, $_POST['thn_pelatihan']);
+$pendidikan     = mysqli_real_escape_string($koneksi, $_POST['pendidikan']);
 
-// cek apakah user upload file baru
-if (isset($_FILES['file_sk']) && $_FILES['file_sk']['name'] != "") {
 
-    $file = $_FILES['file_sk']['name'];
-    $tmp  = $_FILES['file_sk']['tmp_name'];
-    $size = $_FILES['file_sk']['size'];
+// CEK NIP DUPLIKAT
+$cek = mysqli_query($koneksi, "
+    SELECT * FROM pegawai 
+    WHERE nip = '$nip'
+    AND id != '$id'
+");
 
-    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-    $allowed = ['pdf', 'jpg', 'jpeg', 'png'];
+if (mysqli_num_rows($cek) > 0) {
 
-    // validasi ekstensi
-    if (!in_array($ext, $allowed)) {
-        $_SESSION['error_message'] = "File SK harus PDF/JPG/PNG!";
-        header("Location: index.php?page=edit&id=" . $id);
-        exit;
-    }
+    $_SESSION['error_message'] = "NIP sudah terdaftar!";
 
-    // validasi ukuran
-    if ($size > 5 * 1024 * 1024) {
-        $_SESSION['error_message'] = "Ukuran file maksimal 5MB!";
-        header("Location: index.php?page=edit&id=" . $id);
-        exit;
-    }
-
-    // buat nama aman
-    $nama_tanpa_ext = pathinfo($file, PATHINFO_FILENAME);
-    $nama_bersih = preg_replace("/[^a-zA-Z0-9]/", "_", $nama_tanpa_ext);
-    $nama_file_sk = time() . "_" . $nama_bersih . "." . $ext;
-
-    // upload file baru
-    if (move_uploaded_file($tmp, "files/" . $nama_file_sk)) {
-
-        // jika sebelumnya ada file → hapus
-        if (!empty($file_sk_lama) && file_exists("files/" . $file_sk_lama)) {
-            unlink("files/" . $file_sk_lama);
-        }
-    } else {
-        $_SESSION['error_message'] = "Gagal upload file!";
-        header("Location: index.php?page=edit&id=" . $id);
-        exit;
-    }
-} else {
-    // ❗ tidak upload file baru
-
-    if (empty($file_sk_lama)) {
-        // ➕ CREATE tapi tidak upload → ERROR
-        $_SESSION['error_message'] = "File SK wajib diupload!";
-        header("Location: index.php?page=edit&id=" . $id);
-        exit;
-    }
-
-    // 🔁 UPDATE tanpa upload → pakai file lama
-    $nama_file_sk = $file_sk_lama;
-}
-
-// 🔒 VALIDASI TAMBAHAN (anti hilang ekstensi)
-if (!empty($nama_file_sk) && !str_contains($nama_file_sk, '.')) {
-    $_SESSION['error_message'] = "Nama file tidak valid (tanpa ekstensi)!";
-    header("Location: index.php?page=edit&id=" . $id);
+    header("Location: index.php?page=edit_pegawai&id=$id");
     exit;
 }
 
+// UPDATE DATA
+$query = mysqli_query($koneksi, "
+    UPDATE pegawai SET
+        nip = '$nip',
+        nama = '$nama',
+        jk = '$jk',
+        pangkat = '$pangkat',
+        tmt_sk = '$tmt_sk',
+        jabatan_id = '$jabatan_id',
+        tgl_pelantikan = '$tgl_pelantikan',
+        tmt_jabatan = '$tmt_jabatan',
+        jns_jabatan = '$jns_jabatan',
+        agama = '$agama',
+        no_hp = '$no_hp',
+        alamat = '$alamat',
+        pelatihan = '$pelatihan',
+        thn_pelatihan = '$thn_pelatihan',
+        pendidikan = '$pendidikan'
+    WHERE id = '$id'
+");
 
+if ($query) {
 
-$stmt = mysqli_prepare($koneksi, "UPDATE pegawai SET nama=?, nip=?, jabatan_id=?, jk=?, pendidikan=?, pangkat=?, no_sk_terakhir=?, tmt_sk=?, kelas_jabatan=?, foto=?, file_sk=? WHERE id=?");
-mysqli_stmt_bind_param($stmt, "ssissssssssi", $nama, $nip, $jabatan_id, $jk, $pendidikan, $pangkat, $no_sk, $tmt_sk, $kelas_jabatan, $nama_file, $nama_file_sk, $id);
-// mysqli_stmt_execute($stmt);
-
-$execute = mysqli_stmt_execute($stmt);
-
-if ($execute) {
     $_SESSION['success_message'] = "Data berhasil diupdate!";
-} else {
-    $_SESSION['error_message'] = "Terjadi kesalahan saat mengupdate data.";
-}
 
-header("Location: index.php?page=kepegawaian");
+    header("Location: index.php?page=kepegawaian");
+    exit;
+} else {
+
+    $_SESSION['error_message'] = "Data gagal diupdate!";
+
+    header("Location: index.php?page=edit_pegawai&id=$id");
+    exit;
+}
