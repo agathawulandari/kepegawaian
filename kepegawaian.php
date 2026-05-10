@@ -182,7 +182,6 @@ include 'template/topbar.php';
                             </button>
                             <ul class="dropdown-menu">
                                 <a class="dropdown-item" id="exportExcel" href="#" target="_blank">Excel</a>
-                                <a class="dropdown-item" id="exportPDF" href="#" target="_blank">PDF</a>
                             </ul>
                         </div>
                     </div>
@@ -252,10 +251,8 @@ include 'template/topbar.php';
     // update link export
     function updateExportLink() {
         let urlExcel = "pegawai_excel.php?cari=" + encodeURIComponent(keyword);
-        let urlPDF = "pegawai_pdf.php?cari=" + encodeURIComponent(keyword);
 
         document.getElementById("exportExcel").href = urlExcel;
-        document.getElementById("exportPDF").href = urlPDF;
     }
 
     // load data

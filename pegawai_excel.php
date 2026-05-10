@@ -16,10 +16,37 @@ $params = [];
 $types = "";
 
 $sql = "
-    SELECT p.*, j.nama_jabatan, parent.nama_jabatan AS parent_nama
+    SELECT 
+        p.nip,
+        p.nama,
+        p.jk,
+        p.pangkat,
+        p.tmt_sk,
+        p.jabatan_id,
+        p.tgl_pelantikan,
+        p.tmt_jabatan,
+        p.jns_jabatan,
+        p.agama,
+        p.no_hp,
+        p.alamat,
+        p.pelatihan,
+        p.thn_pelatihan,
+        p.pendidikan,
+        pp.jatuh_tempo,
+        j.nama_jabatan
     FROM pegawai p
     LEFT JOIN jabatan j ON p.jabatan_id = j.id
-    LEFT JOIN jabatan parent ON j.parent_id = parent.id
+    LEFT JOIN (
+            SELECT pengajuan_pangkat.*
+            FROM pengajuan_pangkat
+            INNER JOIN (
+                SELECT pegawai_id, MAX(id) AS max_id
+                FROM pengajuan_pangkat
+                GROUP BY pegawai_id
+            ) terbaru
+            ON pengajuan_pangkat.id = terbaru.max_id
+        ) pp
+        ON p.id = pp.pegawai_id
     WHERE 1=1
 ";
 
@@ -66,30 +93,30 @@ $drawing->setOffsetY(10);
 $drawing->setWorksheet($sheet);
 
 // ================= HEADER =================
-$sheet->mergeCells('A1:J1');
+$sheet->mergeCells('A1:P1');
 $sheet->setCellValue('A1', 'KEMENTERIAN IMIGRASI DAN PEMASYARAKATAN REPUBLIK INDONESIA');
 
-$sheet->mergeCells('A2:J2');
+$sheet->mergeCells('A2:P2');
 $sheet->setCellValue('A2', 'DIREKTORAT JENDERAL PEMASYARAKATAN');
 
-$sheet->mergeCells('A3:J3');
+$sheet->mergeCells('A3:P3');
 $sheet->setCellValue('A3', 'KANTOR WILAYAH RIAU');
 
-$sheet->mergeCells('A4:J4');
+$sheet->mergeCells('A4:P4');
 $sheet->setCellValue('A4', 'LEMBAGA PEMASYARAKATAN KELAS IIA PEKANBARU');
 
-$sheet->mergeCells('A5:J5');
+$sheet->mergeCells('A5:P5');
 $sheet->setCellValue('A5', 'Jalan Pemasyarakatan Nomor 19, Pekanbaru 28222 Telp/Fax: 0761-22262');
 
-$sheet->mergeCells('A6:J6');
+$sheet->mergeCells('A6:P6');
 $sheet->setCellValue('A6', 'Laman: www.lapaspekanbaru.id, Surel: lp2apekanbaru@gmail.com');
 
 // style header
-$sheet->getStyle('A1:A6')->applyFromArray([
+$sheet->getStyle('A1:P6')->applyFromArray([
     'font' => ['bold' => true, 'size' => 12]
 ]);
 
-$sheet->getStyle('A1:J6')->getAlignment()
+$sheet->getStyle('A1:P6')->getAlignment()
     ->setHorizontal(Alignment::HORIZONTAL_CENTER);
 
 // tinggi baris
@@ -98,14 +125,14 @@ for ($i = 1; $i <= 6; $i++) {
 }
 
 // ================= GARIS KOP =================
-$sheet->getStyle('A7:J7')->applyFromArray([
+$sheet->getStyle('A7:P7')->applyFromArray([
     'borders' => [
         'bottom' => ['borderStyle' => Border::BORDER_THICK]
     ]
 ]);
 
 // ================= JUDUL =================
-$sheet->mergeCells('A10:J10');
+$sheet->mergeCells('A10:P10');
 $sheet->setCellValue('A10', 'LAPORAN DATA PEGAWAI');
 
 $sheet->getStyle('A10')->applyFromArray([
@@ -114,19 +141,31 @@ $sheet->getStyle('A10')->applyFromArray([
 ]);
 
 // ================= HEADER TABEL =================
-$sheet->setCellValue('A12', 'No');
-$sheet->setCellValue('B12', 'NIP');
-$sheet->setCellValue('C12', 'Nama');
-$sheet->setCellValue('D12', 'JK');
-$sheet->setCellValue('E12', 'Pendidikan');
-$sheet->setCellValue('F12', 'Pangkat');
-$sheet->setCellValue('G12', 'Jabatan');
-$sheet->setCellValue('H12', 'Kelas');
-$sheet->setCellValue('I12', 'No SK');
-$sheet->setCellValue('J12', 'TMT SK');
+$headers = [
+    'A12' => 'No',
+    'B12' => 'NIP',
+    'C12' => 'Nama Lengkap',
+    'D12' => 'L/P',
+    'E12' => 'Golongan',
+    'F12' => 'TMT Golongan',
+    'G12' => 'Jabatan',
+    'H12' => 'Tanggal Pelantikan',
+    'I12' => 'TMT Jabatan',
+    'J12' => 'Jenis Jabatan',
+    'K12' => 'Agama',
+    'L12' => 'Telepon',
+    'M12' => 'Alamat',
+    'N12' => 'Pelatihan Yang Sudah Diikuti',
+    'O12' => 'Tahun Pelatihan',
+    'P12' => 'Pendidikan Terakhir'
+];
+
+foreach ($headers as $cell => $text) {
+    $sheet->setCellValue($cell, $text);
+}
 
 // style header tabel
-$sheet->getStyle('A12:J12')->applyFromArray([
+$sheet->getStyle('A12:P12')->applyFromArray([
     'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
     'fill' => [
         'fillType' => Fill::FILL_SOLID,
@@ -142,31 +181,74 @@ $no = 1;
 while ($data = mysqli_fetch_assoc($query)) {
 
     $jabatan = $data['nama_jabatan'];
-    if ($jabatan == 'Staff' && $data['parent_nama']) {
-        $jabatan = "Staff " . $data['parent_nama'];
-    }
 
     $sheet->setCellValue('A' . $row, $no++);
     $sheet->setCellValue('B' . $row, $data['nip']);
     $sheet->setCellValue('C' . $row, $data['nama']);
     $sheet->setCellValue('D' . $row, $data['jk']);
-    $sheet->setCellValue('E' . $row, $data['pendidikan']);
-    $sheet->setCellValue('F' . $row, $data['pangkat']);
+    $sheet->setCellValue('E' . $row, $data['pangkat']);
+
+    $tmt = (!empty($data['jatuh_tempo']) && $data['jatuh_tempo'] != '0000-00-00')
+        ? $data['jatuh_tempo']
+        : $data['tmt_sk'];
+
+    $sheet->setCellValue('F' . $row, $tmt);
+
     $sheet->setCellValue('G' . $row, $jabatan);
-    $sheet->setCellValue('H' . $row, $data['kelas_jabatan']);
-    $sheet->setCellValue('I' . $row, $data['no_sk_terakhir']);
-    $sheet->setCellValue('J' . $row, $data['tmt_sk']);
+    $sheet->setCellValue('H' . $row, $data['tgl_pelantikan']);
+    $sheet->setCellValue('I' . $row, $data['tmt_jabatan']);
+    $sheet->setCellValue('J' . $row, $data['jns_jabatan']);
+    $sheet->setCellValue('K' . $row, $data['agama']);
+    $sheet->setCellValue('L' . $row, $data['no_hp']);
+    $sheet->setCellValue('M' . $row, $data['alamat']);
+    $sheet->setCellValue('N' . $row, $data['pelatihan']);
+    $sheet->setCellValue('O' . $row, $data['thn_pelatihan']);
+    $sheet->setCellValue('P' . $row, $data['pendidikan']);
 
     $row++;
 }
 
+// ================= FORMAT TANGGAL =================
+// ================= FORMAT TANGGAL =================
+for ($i = 13; $i < $row; $i++) {
+
+    // TMT Golongan
+    if (!empty($sheet->getCell('F' . $i)->getValue())) {
+        $sheet->setCellValue(
+            'F' . $i,
+            date('d-m-Y', strtotime($sheet->getCell('F' . $i)->getValue()))
+        );
+    }
+
+    // Tanggal Pelantikan
+    if (!empty($sheet->getCell('H' . $i)->getValue())) {
+        $sheet->setCellValue(
+            'H' . $i,
+            date('d-m-Y', strtotime($sheet->getCell('H' . $i)->getValue()))
+        );
+    }
+
+    // TMT Jabatan
+    if (!empty($sheet->getCell('I' . $i)->getValue())) {
+        $sheet->setCellValue(
+            'I' . $i,
+            date('d-m-Y', strtotime($sheet->getCell('I' . $i)->getValue()))
+        );
+    }
+}
+
+// ================= WRAP TEXT =================
+$sheet->getStyle('A12:P' . ($row - 1))
+    ->getAlignment()
+    ->setWrapText(true);
+
 // ================= AUTO WIDTH =================
-foreach (range('A', 'J') as $col) {
+foreach (range('A', 'P') as $col) {
     $sheet->getColumnDimension($col)->setAutoSize(true);
 }
 
 // ================= BORDER =================
-$sheet->getStyle('A12:J' . ($row - 1))->applyFromArray([
+$sheet->getStyle('A12:P' . ($row - 1))->applyFromArray([
     'borders' => [
         'allBorders' => ['borderStyle' => Border::BORDER_THIN]
     ]
@@ -175,9 +257,15 @@ $sheet->getStyle('A12:J' . ($row - 1))->applyFromArray([
 // ================= OUTPUT =================
 $filename = "Laporan_Pegawai.xlsx";
 
+// bersihkan output sebelumnya
+if (ob_get_length()) {
+    ob_end_clean();
+}
+
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header("Content-Disposition: attachment; filename=\"$filename\"");
+header('Content-Disposition: attachment;filename="' . $filename . '"');
+header('Cache-Control: max-age=0');
 
 $writer = new Xlsx($spreadsheet);
-$writer->save("php://output");
+$writer->save('php://output');
 exit;
