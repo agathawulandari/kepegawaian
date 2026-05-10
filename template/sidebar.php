@@ -25,7 +25,7 @@ $page = $_GET['page'] ?? '';
     <div class="sidebar-heading">DATA</div>
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item <?= ($page == 'kepegawaian' || $page == 'tambah' || $page == 'edit') ? 'active' : '' ?>">
+    <li class="nav-item <?= ($page == 'kepegawaian' || $page == 'tambah' || $page == 'edit' || $page == 'detail') ? 'active' : '' ?>">
         <a class="nav-link" href="index.php?page=kepegawaian">
             <i class="fas fa-fw fa-table"></i>
             <span>Data Kepegawaian</span></a>

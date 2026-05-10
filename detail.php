@@ -83,136 +83,112 @@
         <div class="col-xl-12 col-md-12 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <form method="POST" action="kirim_email.php">
 
+                    <?php
+                    include 'koneksi.php';
+                    $id = $_GET['id'];
+
+                    $stmt = mysqli_prepare($koneksi, "SELECT * FROM pegawai WHERE id=?");
+                    mysqli_stmt_bind_param($stmt, "i", $id);
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+                    $data = mysqli_fetch_assoc($result);
+                    ?>
+                    <input type="hidden" name="id" value="<?= $data['id'] ?>">
+
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">NIP</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['nip'] ?></span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Nama Lengkap</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['nama'] ?></span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Jenis Kelamin</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['jk'] ?></span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Pangkat/Golongan</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['pangkat'] ?></span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">TMT SK Golongan Terakhir</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['tmt_sk'] ?></span>
+                    </div>
+
+                    <div class="mb-2">
                         <?php
                         include 'koneksi.php';
-                        $id = $_GET['id'];
+                        $id_jabatan = $data['jabatan_id'];
 
-                        $stmt = mysqli_prepare($koneksi, "SELECT * FROM pegawai WHERE id=?");
-                        mysqli_stmt_bind_param($stmt, "i", $id);
-                        mysqli_stmt_execute($stmt);
-                        $result = mysqli_stmt_get_result($stmt);
-                        $data = mysqli_fetch_assoc($result);
-                        ?>
-                        <input type="hidden" name="id" value="<?= $data['id'] ?>">
-
-                        <?php
-                        if ($data['foto'] && file_exists("uploads/" . $data['foto'])) {
-                            $foto_url = "uploads/" . $data['foto'];
-                        } else {
-                            $foto_url = "uploads/profile.png"; // Gambar default jika foto tidak ada
-
-                        }
-                        ?>
-                        <div class="justify-content-center d-flex mb-4">
-                            <img src="<?= htmlspecialchars($foto_url) ?>" width="150" class="img-thumbnail" alt="Foto Pegawai">
-                        </div>
-                        <hr style="border-top: 5px solid #000000;">
-
-                        <button type="submit" name="send_email" class="btn btn-primary mb-3">
-                            Send Email
-                        </button>
-
-                        <div class="mb-2">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">NIP</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['nip'] ?></span>
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Nama Lengkap</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['nama'] ?></span>
-                        </div>
-
-                        <div class="mb-2">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Jenis Kelamin</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['jk'] ?></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Pendidikan Terakhir</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['pendidikan'] ?></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Pangkat/Golongan</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['pangkat'] ?></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <?php
-                            include 'koneksi.php';
-                            $id_jabatan = $data['jabatan_id'];
-
-                            $query = mysqli_query($koneksi, "
+                        $query = mysqli_query($koneksi, "
                                         SELECT 
                                             j.nama_jabatan, 
                                             parent.nama_jabatan AS parent_nama
                                         FROM jabatan j
-                                        LEFT JOIN jabatan parent ON j.parent_id = parent.id
+                                        LEFT JOIN jabatan parent ON j.id = parent.id
                                         WHERE j.id = '$id_jabatan'
                                     ");
 
-                            $jabatan = mysqli_fetch_assoc($query);
+                        $jabatan = mysqli_fetch_assoc($query);
+                        $nama_jabatan = $jabatan['nama_jabatan'];
+                        ?>
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Jabatan</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= htmlspecialchars($nama_jabatan) ?></span>
+                    </div>
 
-                            // format nama
-                            if ($jabatan['nama_jabatan'] == 'Staff' && $jabatan['parent_nama']) {
-                                $nama_jabatan = "Staff " . $jabatan['parent_nama'];
-                            } else {
-                                $nama_jabatan = $jabatan['nama_jabatan'];
-                            }
-                            ?>
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Jabatan</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= htmlspecialchars($nama_jabatan) ?></span>
-                        </div>
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Tanggal Pelantikan</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['tgl_pelantikan'] ?></span>
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Nomor SK Terakhir</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['no_sk_terakhir'] ?></span>
-                        </div>
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">TMT Jabatan</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['tmt_jabatan'] ?></span>
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Dokumen SK Terakhir</label>
-                            <?php
-                            $file = $data['file_sk'];
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Jenis Jabatan</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['jns_jabatan'] ?></span>
+                    </div>
 
-                            if (!empty($file) && file_exists("files/" . $file)) {
-                                $url = "files/" . $file;
-                                $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                            ?>
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Agama</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['agama'] ?></span>
+                    </div>
 
-                                <a href="<?= htmlspecialchars($url) ?>"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="btn btn-sm btn-primary ml-2">
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">No HP</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['no_hp'] ?></span>
+                    </div>
 
-                                    <?php if ($ext == 'pdf'): ?>
-                                        📄 Lihat PDF
-                                    <?php else: ?>
-                                        🖼️ Lihat Gambar
-                                    <?php endif; ?>
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Alamat</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['alamat'] ?></span>
+                    </div>
 
-                                </a>
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Pelatihan yang Pernah Diikuti</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= !empty($data['pelatihan']) ? htmlspecialchars($data['pelatihan']) : '-' ?></span>
+                    </div>
 
-                            <?php
-                            } else {
-                                echo "<span class='text-muted'>Tidak ada file</span>";
-                            }
-                            ?>
-                        </div>
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Tahun Pelatihan</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= !empty($data['thn_pelatihan']) ? htmlspecialchars($data['thn_pelatihan']) : '-' ?></span>
+                    </div>
 
-                        <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">TMT SK Jabatan Terakhir</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['tmt_sk'] ?></span>
-                        </div>
+                    <div class="mb-2">
+                        <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Pendidikan Terakhir</label>
+                        <span class="col-md-8" style="font-size: 18px;"><?= $data['pendidikan'] ?></span>
+                    </div>
+                    <br>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='index.php?page=kepegawaian'  ">Kembali</button>
 
-                        <div class="mb-3">
-                            <label class="col-md-4" style="font-size: 20px; font-weight: bold;">Kelas Jabatan</label>
-                            <span class="col-md-8" style="font-size: 19px;"><?= $data['kelas_jabatan'] ?></span>
-                        </div>
-                        <br>
-                        <button type="button" class="btn btn-secondary" onclick="window.location.href='index.php?page=kepegawaian'  ">Kembali</button>
-                    </form>
                     <br>
                 </div>
             </div>

@@ -96,17 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <td><?= $no++ ?></td>
                     <td><?= highlight(htmlspecialchars($data['nip']), $kata_kunci) ?></td>
                     <td><?= highlight(htmlspecialchars($data['nama']), $kata_kunci) ?></td>
-
-                    <td>
-                        <?php
-                        if ($data['nama_jabatan'] == 'Staff' && $data['parent_nama']) {
-                            echo "Staff " . htmlspecialchars($data['parent_nama']);
-                        } else {
-                            echo htmlspecialchars($data['nama_jabatan']);
-                        }
-                        ?>
-                    </td>
-
+                    <td><?= htmlspecialchars($data['nama_jabatan']) ?></td>
                     <td><?= htmlspecialchars($data['pangkat']) ?></td>
 
                     <td class="d-flex gap-1">
