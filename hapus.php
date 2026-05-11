@@ -11,7 +11,7 @@ if (!isset($_GET['id'])) {
 $id = (int) $_GET['id'];
 
 // query hapus data
-$query = mysqli_query($koneksi, "DELETE FROM kepegawaian WHERE id = '$id'");
+$query = mysqli_query($koneksi, "DELETE FROM pegawai WHERE id = '$id'");
 
 if ($query) {
     $_SESSION['success_message'] = "Data berhasil dihapus";
