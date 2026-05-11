@@ -165,16 +165,16 @@ include 'template/topbar.php';
                 <h1 class="h3 mb-0 text-gray-800">Data Pegawai</h1>
                 <a href="index.php?page=tambah" class="btn btn-outline-primary">Tambah</i></a>
             </div>
+
+            <!-- Search Form -->
+            <div class="d-flex justify-content-end">
+                <div class="p-2 col-12 col-sm-8 col-md-6 col-lg-4 ">
+                    <input type="text" id="search" class="form-control" placeholder="Cari nama atau NIP">
+                </div>
+            </div>
+
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
-                    <!-- Search Form -->
-                    <div class="d-flex justify-content-end mb-2">
-                        <div class="p-2 col-12 col-sm-8 col-md-6 col-lg-9">
-
-                        </div>
-                        <input type="text" id="search" class="form-control" placeholder="Cari nama atau NIP">
-                    </div>
-
                     <div class="d-flex justify-content-end p-2 mb-2">
                         <div class="dropdown">
                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
