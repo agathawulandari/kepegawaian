@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cari = isset($_POST['cari']) ? trim($_POST['cari']) : '';
     $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
 
-    $limit = 10;
+    $limit = 20;
     $offset = ($page - 1) * $limit;
 
     $params = [];
@@ -152,6 +152,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <?php
+$gol = mysqli_query($koneksi, "
+    SELECT 
+        SUM(CASE WHEN pangkat LIKE '%/I/%' THEN 1 ELSE 0 END) AS gol1,
+        SUM(CASE WHEN pangkat LIKE '%/II/%' THEN 1 ELSE 0 END) AS gol2,
+        SUM(CASE WHEN pangkat LIKE '%/III/%' THEN 1 ELSE 0 END) AS gol3,
+        SUM(CASE WHEN pangkat LIKE '%/IV/%' THEN 1 ELSE 0 END) AS gol4
+    FROM pegawai
+    ");
+
+    $count = mysqli_fetch_assoc($gol);
+
+$jk = mysqli_query($koneksi, "
+    SELECT 
+        SUM(CASE WHEN jk = 'Laki-laki' THEN 1 ELSE 0 END) AS lk,
+        SUM(CASE WHEN jk = 'Perempuan' THEN 1 ELSE 0 END) AS pr
+    FROM pegawai
+    ");
+
+    $count_lk = mysqli_fetch_assoc($jk);
+
+
 include 'template/topbar.php';
 
 ?>
@@ -173,9 +194,19 @@ include 'template/topbar.php';
                 </div>
             </div>
 
-            <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card border-left-primary shadow  py-2">
                 <div class="card-body">
-                    <div class="d-flex justify-content-end p-2 mb-2">
+                    <div class="d-flex justify-content-between p-2 mb-2">
+                        Golongan 1 = <?= $count['gol1'] ?>  
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                        Laki-laki &nbsp;&nbsp;&nbsp;&nbsp; = <?= $count_lk['lk']?>
+                        <br>
+                        Golongan 2 = <?= $count['gol2'] ?> 
+                        &nbsp;&nbsp;&nbsp;
+                        Perempuan  = <?= $count_lk['pr']?>
+                        <br>
+                        Golongan 3 = <?= $count['gol3'] ?> <br>
+                        Golongan 4 = <?= $count['gol4'] ?> <br>
                         <div class="dropdown">
                             <button class="btn btn-info dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 File

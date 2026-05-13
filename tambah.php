@@ -67,7 +67,6 @@ include 'template/topbar.php';
                                 <select class="form-select" name="pangkat" id="pangkat" required>
                                     <option value="" disabled selected>Pilih Pangkat</option>
                                     <!-- Golongan I -->
-                                    <!-- Golongan I -->
                                     <optgroup label="Golongan I – Juru">
                                         <option value="Juru Muda/I/A"
                                             <?= (($_SESSION['old']['pangkat'] ?? '') == 'Juru Muda/I/A')

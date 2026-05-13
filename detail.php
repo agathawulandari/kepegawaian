@@ -48,7 +48,7 @@ include 'template/topbar.php';
 
                     <div class="mb-2">
                         <label class="col-md-4" style="font-size: 19px; font-weight: bold;">TMT SK Golongan Terakhir</label>
-                        <span class="col-md-8" style="font-size: 18px;"><?= $data['tmt_sk'] ?></span>
+                        <span class="col-md-8" style="font-size: 18px;"><?= date('d-m-Y', strtotime($data['tmt_sk'])) ?></span>
                     </div>
 
                     <div class="mb-2">
@@ -74,12 +74,12 @@ include 'template/topbar.php';
 
                     <div class="mb-2">
                         <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Tanggal Pelantikan</label>
-                        <span class="col-md-8" style="font-size: 18px;"><?= $data['tgl_pelantikan'] ?></span>
+                        <span class="col-md-8" style="font-size: 18px;"><?= date('d-m-Y', strtotime($data['tgl_pelantikan'])) ?></span>
                     </div>
 
                     <div class="mb-2">
                         <label class="col-md-4" style="font-size: 19px; font-weight: bold;">TMT Jabatan</label>
-                        <span class="col-md-8" style="font-size: 18px;"><?= $data['tmt_jabatan'] ?></span>
+                        <span class="col-md-8" style="font-size: 18px;"><?= date('d-m-Y', strtotime($data['tmt_jabatan'])) ?></span>
                     </div>
 
                     <div class="mb-2">
@@ -109,7 +109,7 @@ include 'template/topbar.php';
 
                     <div class="mb-2">
                         <label class="col-md-4" style="font-size: 19px; font-weight: bold;">Tahun Pelatihan</label>
-                        <span class="col-md-8" style="font-size: 18px;"><?= !empty($data['thn_pelatihan']) ? htmlspecialchars($data['thn_pelatihan']) : '-' ?></span>
+                        <span class="col-md-8" style="font-size: 18px;"><?= (!empty($data['thn_pelatihan']) && $data['thn_pelatihan'] != '0000') ? htmlspecialchars($data['thn_pelatihan']) : '-' ?></span>
                     </div>
 
                     <div class="mb-2">

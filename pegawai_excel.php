@@ -202,7 +202,10 @@ while ($data = mysqli_fetch_assoc($query)) {
     $sheet->setCellValue('L' . $row, $data['no_hp']);
     $sheet->setCellValue('M' . $row, $data['alamat']);
     $sheet->setCellValue('N' . $row, $data['pelatihan']);
-    $sheet->setCellValue('O' . $row, $data['thn_pelatihan']);
+    $sheet->setCellValue('O' . $row,
+    (!empty($data['thn_pelatihan']) && $data['thn_pelatihan'] != '0000')
+        ? $data['thn_pelatihan']
+        : '-');
     $sheet->setCellValue('P' . $row, $data['pendidikan']);
 
     $row++;
